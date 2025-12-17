@@ -1,0 +1,64 @@
+{
+  "validCandidate": {
+    "firstName": "Juan",
+    "lastName": "Pérez",
+    "email": "juan.perez@example.com",
+    "phone": "+34 600 123 456",
+    "address": "Calle Principal 123, Madrid",
+    "educations": [
+      {
+        "institution": "Universidad Complutense de Madrid",
+        "title": "Ingeniería Informática",
+        "startDate": "2018-09-01",
+        "endDate": "2022-06-30"
+      }
+    ],
+    "workExperiences": [
+      {
+        "company": "Tech Solutions S.L.",
+        "position": "Desarrollador Full Stack",
+        "description": "Desarrollo de aplicaciones web con React y Node.js",
+        "startDate": "2022-07-01",
+        "endDate": "2024-01-31"
+      }
+    ]
+  },
+  "minimalCandidate": {
+    "firstName": "María",
+    "lastName": "García",
+    "email": "maria.garcia@example.com"
+  },
+  "candidateWithMultipleEducations": {
+    "firstName": "Carlos",
+    "lastName": "López",
+    "email": "carlos.lopez@example.com",
+    "phone": "+34 611 222 333",
+    "educations": [
+      {
+        "institution": "IES Tecnológico",
+        "title": "Bachillerato Tecnológico",
+        "startDate": "2016-09-01",
+        "endDate": "2018-06-30"
+      },
+      {
+        "institution": "Universidad Politécnica",
+        "title": "Grado en Ingeniería de Software",
+        "startDate": "2018-09-01",
+        "endDate": "2022-06-30"
+      },
+      {
+        "institution": "Escuela de Negocios",
+        "title": "Máster en Gestión de Proyectos",
+        "startDate": "2022-09-01",
+        "endDate": "2023-06-30"
+      }
+    ]
+  },
+  "invalidCandidate": {
+    "firstName": "A",
+    "lastName": "",
+    "email": "invalid-email",
+    "phone": "123"
+  }
+}
+

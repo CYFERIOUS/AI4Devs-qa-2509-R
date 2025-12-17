@@ -1,28 +1,40 @@
-# Ignore in all directories
-**/.DS_Store
-#**/.env
-**/.env.example
-**/node_modules
-**/prompts_master.md
+# Cypress
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+cypress.env.json
 
-# other dependencies
-**/.pnp
-**.pnp.js
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
 
-# testing
-**/coverage
+# Build outputs
+frontend/build/
+backend/dist/
 
-# production
-**/build
-**/dist
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# logs
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# IDE
-.idea
-.vscode
+# OS
+.DS_Store
+Thumbs.db
 
-# .env
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/

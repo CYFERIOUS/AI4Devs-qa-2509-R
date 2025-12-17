@@ -86,6 +86,58 @@ npm start
 
 The backend server will be running at http://localhost:3010, and the frontend will be available at http://localhost:3000.
 
+## E2E Testing with Cypress
+
+This project includes comprehensive end-to-end testing using Cypress. The tests cover user flows, API integration, and UI interactions.
+
+### Running Cypress Tests
+
+1. **Install dependencies** (if not already installed):
+   ```bash
+   npm install
+   ```
+
+2. **Start the application** (backend and frontend must be running):
+   ```bash
+   # Terminal 1: Start backend
+   cd backend
+   npm run dev
+
+   # Terminal 2: Start frontend
+   cd frontend
+   npm start
+   ```
+
+3. **Run Cypress tests**:
+   ```bash
+   # Open Cypress Test Runner (Interactive Mode)
+   npm run cypress:open
+
+   # Run tests headlessly
+   npm run cypress:run
+
+   # Run tests in specific browser
+   npm run cypress:run:chrome
+   ```
+
+### Test Structure
+
+- **Dashboard Tests** (`cypress/e2e/dashboard.cy.ts`): Tests for the recruiter dashboard
+- **Add Candidate Tests** (`cypress/e2e/add-candidate.cy.ts`): Tests for candidate creation form
+- **Positions Tests** (`cypress/e2e/positions.cy.ts`): Tests for positions listing and details
+- **API Integration Tests** (`cypress/e2e/api-integration.cy.ts`): Direct API endpoint testing
+
+### Custom Commands
+
+The project includes custom Cypress commands for common operations:
+- `cy.fillCandidateForm(data)` - Fill candidate form fields
+- `cy.createCandidate(data)` - Create candidate via API
+- `cy.deleteCandidate(id)` - Delete candidate via API
+- `cy.addEducation(education)` - Add education entry to form
+- `cy.addWorkExperience(experience)` - Add work experience entry to form
+
+For more details, see [cypress/README.md](./cypress/README.md).
+
 ## Docker y PostgreSQL
 
 This project uses Docker to run a PostgreSQL database. Here's how to get it up and running:

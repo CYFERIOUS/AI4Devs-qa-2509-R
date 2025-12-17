@@ -1,0 +1,120 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    name: Cypress E2E Tests
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mydatabase
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Setup Prisma
+        working-directory: ./backend
+        run: |
+          npx prisma generate
+          npx prisma migrate deploy
+
+      - name: Seed database
+        working-directory: ./backend
+        run: npx ts-node prisma/seed.ts
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/mydatabase
+
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/mydatabase
+
+      - name: Start backend server
+        working-directory: ./backend
+        run: npm start &
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/mydatabase
+          PORT: 3010
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Start frontend server
+        working-directory: ./frontend
+        run: |
+          npm install -g serve
+          serve -s build -l 3000 &
+        env:
+          REACT_APP_API_URL: http://localhost:3010
+
+      - name: Wait for servers to be ready
+        run: |
+          npx wait-on http://localhost:3010/health || npx wait-on http://localhost:3010/candidates || echo "Backend might not have health endpoint"
+          npx wait-on http://localhost:3000
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          headless: true
+        env:
+          CYPRESS_baseUrl: http://localhost:3000
+          CYPRESS_apiUrl: http://localhost:3010
+
+      - name: Upload Cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: Upload Cypress videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          retention-days: 7
+

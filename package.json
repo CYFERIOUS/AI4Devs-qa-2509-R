@@ -1,4 +1,18 @@
 {
+  "name": "ai4devs-qa-2509-r",
+  "version": "1.0.0",
+  "description": "Talent Tracking System with Cypress E2E Testing",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:headed": "cypress run --headed",
+    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:run:firefox": "cypress run --browser firefox",
+    "cypress:run:edge": "cypress run --browser edge",
+    "cypress:run:spec": "cypress run --spec",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open"
+  },
   "dependencies": {
     "dotenv": "^16.4.5"
   },
@@ -6,5 +20,6 @@
     "schema": "backend/prisma/schema.prisma"
   },
   "devDependencies": {
+    "cypress": "^15.7.1"
   }
 }
