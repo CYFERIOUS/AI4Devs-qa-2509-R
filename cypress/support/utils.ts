@@ -72,3 +72,4 @@ export const scrollIntoView = (selector: string): Cypress.Chainable => {
   return cy.get(selector).scrollIntoView();
 };
 
+

@@ -204,3 +204,4 @@ This runs tests headlessly and generates reports.
 - Check API URL in `cypress.config.ts`
 - Verify CORS settings in backend
 
+
